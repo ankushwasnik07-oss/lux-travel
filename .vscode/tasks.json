@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "problemMatcher": [],
+      "label": "npm: dev (Start Web App)",
+      "detail": "Starts the Vite development server on http://localhost:3000",
+      "isBackground": true,
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "type": "shell",
+      "command": "streamlit run python_frontend/app_streamlit.py",
+      "problemMatcher": [],
+      "label": "python: run streamlit",
+      "detail": "Runs the Python Streamlit Frontend"
+    },
+    {
+      "type": "shell",
+      "command": "python python_frontend/app_flask.py",
+      "problemMatcher": [],
+      "label": "python: run flask",
+      "detail": "Runs the Python Flask Frontend"
+    },
+    {
+      "type": "shell",
+      "command": "python python_frontend/travel_engine.py",
+      "problemMatcher": [],
+      "label": "python: run cli engine",
+      "detail": "Runs the Python CLI booking test engine"
+    }
+  ]
+}

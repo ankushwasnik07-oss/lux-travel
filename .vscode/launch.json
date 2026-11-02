@@ -1,0 +1,44 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🌐 Run Web App (Chrome / Edge)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "name": "🐍 Run Streamlit Python Frontend",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": ["run", "python_frontend/app_streamlit.py"],
+      "jinja": true,
+      "justMyCode": true
+    },
+    {
+      "name": "🐍 Run Flask Python App",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/python_frontend/app_flask.py",
+      "jinja": true,
+      "justMyCode": true
+    },
+    {
+      "name": "🐍 Run Desktop GUI (CustomTkinter)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/python_frontend/app_desktop_gui.py",
+      "justMyCode": true
+    },
+    {
+      "name": "🐍 Run Python CLI Engine",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/python_frontend/travel_engine.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
