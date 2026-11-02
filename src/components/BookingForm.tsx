@@ -156,7 +156,7 @@ export const BookingForm: React.FC<BookingFormProps> = ({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. Shravani Sharma"
+                  placeholder="e.g. Shravani Dhumal"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
                   className="w-full bg-white/[0.08] border border-[#0284C7]/30 focus:border-[#38BDF8] text-[#F0F9FF] px-4 py-3 rounded-xl text-sm outline-none transition placeholder:text-[#64748B]"

@@ -123,7 +123,7 @@ with st.sidebar.form("booking_form"):
     
     pkg_data = next(p for p in PACKAGES if p["name"] == chosen_pkg)
     
-    full_name = st.text_input("Full Name", placeholder="e.g. Shravani Sharma")
+    full_name = st.text_input("Full Name", placeholder="e.g. Shravani Dhumal")
     email = st.text_input("Email", placeholder="e.g. shravani@email.com")
     phone = st.text_input("Phone Number", placeholder="e.g. 9876543210")
     travel_date = st.date_input("Travel Date", min_value=date.today() + timedelta(days=1))
