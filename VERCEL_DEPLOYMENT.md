@@ -1,38 +1,44 @@
 # 🚀 Deploying Infinity Travels on Vercel
 
-### What caused the build error?
-Vercel previously displayed:
-> `No Flask entrypoint found. Set "tool.vercel.entrypoint" in pyproject.toml or define an entrypoint in one of: app.py, index.py...`
+### Fixes Applied:
+1. **Fixed `Command "npm install" exited with 1` (ERESOLVE conflict)**:
+   - Root cause: An explicit `"esbuild": "^0.25.0"` version in `devDependencies` conflicted with `vite@8.3.x`'s peer dependency requirement during Vercel's strict `npm install`.
+   - Resolution:
+     - Removed the conflicting explicit `esbuild` lock (Vite automatically manages its internal esbuild).
+     - Added `.npmrc` configured with `legacy-peer-deps=true` and `auto-install-peers=true`.
+     - Added `"installCommand": "npm install --legacy-peer-deps"` in `vercel.json`.
 
-This happens when Vercel detects Python files or has the **Flask** preset selected in the Vercel dashboard, but no standard Flask entrypoint (`app.py`, `api/index.py`) was present at the root.
+2. **Fixed `No Flask entrypoint found`**:
+   - Added `app.py` root Flask WSGI application with REST endpoints (`/api/packages`, `/api/quote`, `/api/book`, `/api/health`) and static frontend serving.
+   - Added `api/index.py` for Vercel Serverless Functions.
+   - Added `pyproject.toml` with `[tool.vercel] entrypoint = "app.py"`.
+   - Added `requirements.txt` (`flask>=3.0.0`, `werkzeug>=3.0.0`, `requests>=2.31.0`).
 
----
-
-### What has been fixed:
-1. **Added `app.py`**: A fully functional Flask WSGI application with REST endpoints (`/api/packages`, `/api/quote`, `/api/book`, `/api/health`) and static frontend serving.
-2. **Added `api/index.py`**: Vercel Serverless Function entrypoint so API calls automatically map to Python.
-3. **Added `pyproject.toml`**: Configured `[tool.vercel] entrypoint = "app.py"` as instructed by Vercel's build detector.
-4. **Added `requirements.txt`**: Added `flask>=3.0.0`, `werkzeug>=3.0.0`, `requests>=2.31.0` so Vercel installs the necessary Python dependencies during build.
-5. **Added `vercel.json`**: Configured `"framework": "vite"`, build command `npm run build`, and SPA output directory `dist` with rewrites.
+3. **`vercel.json` Configuration**:
+   - Preset: `"framework": "vite"`
+   - Install Command: `"npm install --legacy-peer-deps"`
+   - Build Command: `"npm run build"`
+   - Output Directory: `"dist"`
+   - Rewrites: `/api/*` routed to Python serverless function, SPA routes to `/index.html`.
 
 ---
 
 ### How to Deploy (Step-by-Step):
 
-#### Method 1: Using Vercel Dashboard (Recommended)
+#### Option A: Deploy from GitHub / Git Repository (Vercel Dashboard)
 1. Go to [vercel.com](https://vercel.com) and click **"Add New..." > "Project"**.
-2. Import your GitHub / Git repository.
-3. In the **Configure Project** screen:
-   - **Framework Preset**: Select **Vite** (or leave default detected).
-   - **Root Directory**: `./` (project root).
+2. Select your repository.
+3. In the project setup screen:
+   - **Framework Preset**: **Vite**
+   - **Root Directory**: `./`
    - **Build Command**: `npm run build`
    - **Output Directory**: `dist`
-   - **Install Command**: `npm install`
-4. Click **Deploy**. Your site will build and go live in seconds!
+   - **Install Command**: `npm install --legacy-peer-deps`
+4. Click **Deploy**.
 
-#### Method 2: Deploying via Vercel CLI
+#### Option B: Deploy via Vercel CLI
 ```bash
 npm install -g vercel
 vercel
 ```
-Accept the defaults and deploy!
+Select default settings and deploy!
